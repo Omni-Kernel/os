@@ -207,12 +207,9 @@ OMNI_KERNEL v7.1 operates as a **Glass Box** — every decision is 100% traceabl
 ```
 /
 ├── README.md
-├── index.html                                ← Live dossier showcase (open in browser)
-├── src/
-│   └── App.tsx                               ← Main React application
-├── services/
-│   ├── geminiService.ts                      ← OMNI_KERNEL engine (proprietary)
-│   └── types.ts                              ← Type definitions
+├── ASSET_REGISTER.md
+├── WHITEPAPER.md                             ← Live dossier showcase (open in browser)
+├── index.html                              
 └── docs/
     ├── dossier-01-the-sovereign.md
     ├── dossier-02-the-trojan.md
