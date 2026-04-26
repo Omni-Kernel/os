@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OMNI_KERNEL v7.1 — Autonomous Revenue Architecture</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #050505;
+    --white: #ffffff;
+    --zinc-900: #18181b;
+    --zinc-800: #27272a;
+    --zinc-700: #3f3f46;
+    --zinc-600: #52525b;
+    --zinc-500: #71717a;
+    --zinc-400: #a1a1aa;
+    --zinc-300: #d4d4d8;
+    --green: #22c55e;
+    --red: #ef4444;
+    --yellow: #eab308;
+    --blue: #3b82f6;
+  }
+  body { background: var(--black); color: var(--white); font-family: 'Courier New', monospace; overflow-x: hidden; }
+  
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(5,5,5,0.95); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-size: 12px; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; }
+  .nav-badge { font-size: 10px; padding: 4px 12px; border: 1px solid rgba(255,255,255,0.1); color: var(--zinc-500); letter-spacing: 0.2em; text-transform: uppercase; }
+
+  header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 2rem 4rem; max-width: 1200px; margin: 0 auto; }
+  .header-tag { font-size: 10px; color: var(--zinc-600); letter-spacing: 0.5em; text-transform: uppercase; margin-bottom: 2rem; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.1); }
+  h1 { font-size: clamp(4rem, 12vw, 9rem); font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; line-height: 0.9; margin-bottom: 2rem; }
+  .header-sub { font-size: 14px; color: var(--zinc-500); letter-spacing: 0.1em; text-transform: uppercase; max-width: 600px; line-height: 1.8; margin-bottom: 3rem; }
+  .header-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); }
+  .stat { background: var(--black); padding: 1.5rem; }
+  .stat-val { font-size: 1.8rem; font-weight: 900; letter-spacing: -0.03em; }
+  .stat-label { font-size: 9px; color: var(--zinc-600); letter-spacing: 0.3em; text-transform: uppercase; margin-top: 0.5rem; }
+
+  section { max-width: 1200px; margin: 0 auto; padding: 6rem 2rem; }
+  .section-tag { font-size: 10px; color: var(--zinc-600); letter-spacing: 0.5em; text-transform: uppercase; margin-bottom: 1rem; display: block; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.1); }
+  h2 { font-size: clamp(3rem, 7vw, 6rem); font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; line-height: 0.9; margin-bottom: 3rem; }
+
+  .dossier-grid { display: grid; grid-template-columns: 1fr; gap: 1px; background: rgba(255,255,255,0.05); }
+  .dossier { background: #050505; padding: 2rem; cursor: pointer; transition: all 0.3s; border-left: 3px solid transparent; }
+  .dossier:hover { background: #0a0a0a; border-left-color: var(--white); }
+  .dossier.escalate { border-left-color: var(--green); }
+  .dossier.kill { border-left-color: var(--red); }
+  .dossier.defer { border-left-color: var(--yellow); }
+  .dossier-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+  .dossier-name { font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
+  .dossier-company { font-size: 10px; color: var(--zinc-500); letter-spacing: 0.2em; text-transform: uppercase; margin-top: 0.25rem; }
+  .dossier-badges { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+  .badge { font-size: 10px; font-weight: 900; padding: 4px 12px; letter-spacing: 0.2em; text-transform: uppercase; }
+  .badge-escalate { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .badge-kill { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+  .badge-defer { background: rgba(234,179,8,0.15); color: var(--yellow); border: 1px solid rgba(234,179,8,0.3); }
+  .badge-deal { background: rgba(59,130,246,0.1); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+  .dossier-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  .metric { }
+  .metric-val { font-size: 1.1rem; font-weight: 900; letter-spacing: -0.02em; }
+  .metric-label { font-size: 9px; color: var(--zinc-600); letter-spacing: 0.2em; text-transform: uppercase; margin-top: 0.25rem; }
+  .entropy-bar-wrap { margin-bottom: 1rem; }
+  .entropy-bar-label { font-size: 9px; color: var(--zinc-600); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.4rem; display: flex; justify-content: space-between; }
+  .entropy-bar-bg { height: 2px; background: var(--zinc-900); width: 100%; }
+  .entropy-bar-fill { height: 2px; transition: width 1s ease; }
+  .dossier-insight { font-size: 11px; color: var(--zinc-500); line-height: 1.8; letter-spacing: 0.05em; border-left: 2px solid rgba(255,255,255,0.05); padding-left: 1rem; }
+  .dossier-audit { font-size: 10px; color: var(--zinc-700); margin-top: 1rem; letter-spacing: 0.05em; }
+
+  .summary-section { background: #080808; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.05); }
+  .summary-item { background: #080808; padding: 3rem 2rem; }
+  .summary-num { font-size: 3rem; font-weight: 900; letter-spacing: -0.04em; }
+  .summary-desc { font-size: 10px; color: var(--zinc-600); letter-spacing: 0.3em; text-transform: uppercase; margin-top: 0.5rem; line-height: 1.8; }
+
+  footer { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); flex-wrap: wrap; gap: 1rem; }
+  .footer-left { font-size: 10px; color: var(--zinc-700); letter-spacing: 0.2em; text-transform: uppercase; line-height: 2; }
+  .footer-right { font-size: 10px; color: var(--zinc-700); letter-spacing: 0.2em; text-transform: uppercase; text-align: right; }
+
+  @media (max-width: 768px) {
+    .header-stats { grid-template-columns: repeat(2, 1fr); }
+    .dossier-metrics { grid-template-columns: repeat(2, 1fr); }
+    .summary-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">OMNI_KERNEL // v7.1</div>
+  <div class="nav-badge">Patent Pending · $300M+ Architecture</div>
+</nav>
+
+<header>
+  <div class="header-tag">OMNIAGENT / REVENUE_OS_KERNEL / LIVE_BACKTEST</div>
+  <h1>Autonomous<br>Revenue.</h1>
+  <p class="header-sub">A Hierarchical Bayesian Framework for Capital Execution under Epistemic Uncertainty. 10 dossiers. $3.85B screened. Every result deterministic and reproducible.</p>
+  <div class="header-stats">
+    <div class="stat"><div class="stat-val" style="color:var(--green)">6</div><div class="stat-label">Correct escalate / defer calls</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--red)">3</div><div class="stat-label">Hostile deals killed</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--red)">$1.97M</div><div class="stat-label">Total waste avoided</div></div>
+    <div class="stat"><div class="stat-val">$3.85B</div><div class="stat-label">Total deal value screened</div></div>
+  </div>
+</header>
+
+<section>
+  <span class="section-tag">Live Backtest Results // 10 Dossiers</span>
+  <h2>Dossiers.</h2>
+
+  <div class="dossier-grid">
+
+    <div class="dossier escalate">
+      <div class="dossier-header">
+        <div><div class="dossier-name">01 — The Sovereign</div><div class="dossier-company">Meridian Global Ventures · SIG-19DC8CF6F28</div></div>
+        <div class="dossier-badges"><span class="badge badge-deal">$4.2M</span><span class="badge badge-escalate">ESCALATE</span></div>
+      </div>
+      <div class="dossier-metrics">
+        <div class="metric"><div class="metric-val">$421,811</div><div class="metric-label">Expected revenue</div></div>
+        <div class="metric"><div class="metric-val">$106,929</div><div class="metric-label">Capital allocated</div></div>
+        <div class="metric"><div class="metric-val" style="color:var(--green)">15.96</div><div class="metric-label">Kill score / 100</div></div>
+        <div class="metric"><div class="metric-val">84.0%</div><div class="metric-label">Win probability</div></div>
+      </div>
+      <div class="entropy-bar-wrap"><div class="entropy-bar-label"><span>Entropy</span><span>4.9 · STABLE</span></div><div class="entropy-bar-bg"><div class="entropy-bar-fill" style="width:4.9%;background:var(--green)"></div></div></div>
+      <div class="dossier-insight">Clean authority, zero adversarial phrases, entropy near-floor. Hierarchical Bayesian posterior strongly favors deployment. Kelly cleared 10% threshold — immediate capital commitment justified.</div>
+      <div class="dossier-audit">[2026-04-26T08:02:10Z] Monte Carlo: 5000 iterations · volatility_tax: 0.95</div>
+    </div>
+
+    <div class="dossier kill">
+      <div class="dossier-header">
+        <div><div class="dossier-name">02 — The Trojan</div><div class="dossier-company">NexGen AI Partners · SIG-19DC8CFF234</div></div>
+        <div class="dossier-badges"><span class="badge badge-deal">$3M</span><span class="badge badge-kill">KILL</span></div>
+      </div>
+      <div class="dossier-metrics">
+        <div class="metric"><div class="metric-val" style="color:var(--red)">100.0</div><div class="metric-label">Entropy · RADIOACTIVE</div></div>
+        <div class="metric"><div class="metric-val" style="color:var(--red)">$609,958</div><div class="metric-label">Waste avoided</div></div>
+        <div class="metric"><div class="metric-val" style="color:var(--red)">87.9</div><div class="metric-label">Kill score / 100</div></div>
+        <div class="metric"><div class="metric-val">0.00</div><div class="metric-label">Volatility tax · zeroed</div></div>
+      </div>
+      <div class="entropy-bar-wrap"><div class="entropy-bar-label"><span>Entropy</span><span>100.0 · RADIOACTIVE</span></div><div class="entropy-bar-bg"><div class="entropy-bar-fill" style="width:100%;background:var(--red)"></div></div></div>
+      <div class="dossier-insight">$3M budget, CEO confirmed — looked perfect. But phrase-level detection caught 4 extraction vectors: "full algorithm access", "reverse engineer", "require source code", "white label agreement". Entropy maxed. $609K preserved.</div>
+      <div class="dossier-audit">[2026-04-26T08:02:44Z] Monte Carlo: 5000 iterations · volatility_tax: 0.00 · RADIOACTIVE override</div>
+    </div>
+
+    <div class="dossier kill">
+      <div class="dossier-header">
+        <div><div class="dossier-name">03 — The Ghost</div><div class="dossier-company">Unknown LLC · SIG-19DC8D06B30</div></div>
+        <div class="dossier-badges"><span class="badge badge-deal">$0</span><span class="badge badge-kill">KILL</span></div>
+      </div>
+      <div class="dossier-metrics">
+        <div class="metric"><div class="metric-val" style="color:var(--red)">75.0</div><div class="metric-label">Kill score · hard floor</div></div>
+        <div class="metric"><div class="metric-val">$211,143</div><div class="metric-label">Waste avoided</div></div>
+        <div class="metric"><div class="metric-val">3.4%</div><div class="metric-label">NLP density · void</div></div>
+        <div class="metric"><div class="metric-val" style="color:var(--red)">NO</div><div class="metric-label">Authority · fired</div></div>
+      </div>
+      <div class="entropy-bar-wrap"><div class="entropy-bar-label"><span>Entropy</span><span>24.7 · STABLE</span></div><div class="entropy-bar-bg"><div class="entropy-bar-fill" style="width:24.7%;background:var(--yellow)"></div></div></div>
+      <div class="dossier-insight">Win probability 74.7% — driven entirely by priors, not evidence. No authority, no budget, pure noise. Sovereignty multiplier hard-clamped kill score to 75 floor. System correctly ignored prior momentum.</div>
+      <div class="dossier-audit">[2026-04-26T08:03:15Z] Monte Carlo: 5000 iterations · authority_override: TRUE</div>
+    </div>
+
+    <div class="dossier escalate">
+      <div class="dossier-header">
+        <div><div class="dossier-name">04 — The Diplomat</div><div class="dossier-company">Stratos Financial Group · SIG-19DC8D0C40B</div></div>
+        <div class="dossier-badges"><span class="badge badge-deal">$1.5M</span><span class="badge badge-escalate">ESCALATE</span></div>
+      </div>
+      <div class="dossier-metrics">
+        <div class="metric"><div class="metric-val">$423,880</div><div class="metric-label">Expected revenue</div></div>
+        <div class="metric"><div class="metric-val">$103,110</div><div class="metric-label">Capital allocated</div></div>
+        <div class="metric"><div class="metric-val" style="color:var(--green)">15.0</div><div class="metric-label">Kill score / 100</div></div>
+        <div class="metric"><div class="metric-val">85.0%</div><div class="metric-label">Win probability</div></div>
+      </div>
+      <div class="entropy-bar-wrap"><div class="entropy-bar-label"><span>Entropy</span><span>4.9 · STABLE</span></div><div class="entropy-bar-bg"><div class="entropy-bar-fill" style="width:4.9%;background:var(--green)"></div></div></div>
+      <div class="dossier-insight">Partial authority, uncertain timeline — yet cash, expansion and fund signals drove strong posterior. Thompson sampling ran hot at 85.0%. System read financial intent through surface ambiguity. Escalated on probabilistic edge.</div>
+      <div class="dossier-audit">[2026-04-26T08:03:38Z] Monte Carlo: 5000 iterations · volatility_tax: 0.95</div>
+    </div>
+
+    <div class="dossier escalate">
+      <div class="dossier-header">
+        <div><div class="dossier-name">05 — The Titan</div><div class="dossier-company">Apex Capital Sovereign Fund · SIG-19DC8D97E58</div></div>
+        <div class="dossier-badges"><span class="badge badge-deal">$850M</span><span class="badge badge-escalate">ESCALATE</span></div>
+      </div>
+      <div class="dossier-metrics">
+        <div class="metric"><div class="metric-val">$311,009</div><div class="metric-label">Expected revenue</div></div>
+        <div class="metric"><div class="metric-val">$67,400</div><div class="metric-label">Capital allocated</div></div>
+        <div class="metric"><div class="metric-val">36.77</div><div class="metric-label">Kill score / 100</div></div>
+        <div class="metric"><div class="metric-val">63.2%</div><div class="metric-label">Win probability</div></div>
+      </div>
+      <div class="entropy-bar-wrap"><div class="entropy-bar-label"><span>Entropy</span><span>4.9 · STABLE</span></div><div class="entropy-bar-bg"><div class="entropy-bar-fill" style="width:4.9%;background:var(--green)"></div></div></div>
+      <div class="dossier-insight">$850M sovereign-backed, Prime Minister office confirmed, zero adversarial phrases. Scale doesn't intimidate the math. Entropy near-floor. System escalated on signal quality alone — deal size is irrelevant to the algorithm.</div>
+      <div class="dossier-audit">[2026-04-26T08:13:10Z] Monte Carlo: 5000 iterations · volatility_tax: 0.95 · scale-invariant</div>
+    </div>
+
+    <div class="dossier kill">
+      <div class="dossier-header">
+        <div><div class="dossier-name">06 — The Empire</div><div class="dossier-company">GlobalCore Dynamics International · SIG-19DC8D9FD42</div></div>
+        <div class="dossier-badges"><span class="badge badge-deal">$1.2B</span><span class="badge badge-kill">KILL</span></div>
+      </div>
+      <div class="dossier-metrics">
+        <div class="metric"><div class="metric-val" style="color:var(--red)">100.0</div><div class="metric-label">Entropy · RADIOACTIVE</div></div>
+        <div class="metric"><div class="metric-val" style="color:var(--red)">$640,000</div><div class="metric-label">Waste avoided</div></div>
+        <div class="metric"><div class="metric-val" style="color:var(--red)">77.74</div><div class="metric-label">Kill score / 100</div></div>
+        <div class="metric"><div class="metric-val">5</div><div class="metric-label">Extraction vectors detected</div></div>
+      </div>
+      <div class="entropy-bar-wrap"><div class="entropy-bar-label"><span>Entropy</span><span>100.0 · RADIOACTIVE</span></div><div class="entropy-bar-bg"><div class="entropy-bar-fill" style="width:100%;background:var(--red)"></div></div></div>
+      <div class="dossier-insight">The biggest bait in the suite — $1.2B, CEO + CFO confirmed. Five simultaneous extraction vectors detonated entropy to 100.0. Volatility tax zeroed. The bigger the bait, the harder the kill. $640K preserved.</div>
+      <div class="dossier-audit">[2026-04-26T08:13:42Z] Monte Carlo: 5000 iterations · volatility_tax: 0.00 · 5 phrase bombs</div>
+    </div>
+
+    <div class="dossier defer">
+      <div class="dossier-header">
+        <div><div class="dossier-name">07 — The Cartel</div><div class="dossier-company">Meridian Offshore Holdings · SIG-19DC8DA7074</div></div>
+        <div class="dossier-badges"><span class="badge badge-deal">$500M</span><span class="badge badge-defer">DEFER</span></div>
+      </div>
+      <div class="dossier-metrics">
+        <div class="metric"><div class="metric-val">$273,465</div><div class="metric-label">Expected revenue</div></div>
+        <div class="metric"><div class="metric-val" style="color:var(--red)">72.3</div><div class="metric-label">Entropy · RADIOACTIVE</div></div>
+        <div class="metric"><div class="metric-val">43.32</div><div class="metric-label">Kill score / 100</div></div>
+        <div class="metric"><div class="metric-val">3.0%</div><div class="metric-label">Kelly · taxed heavily</div></div>
+      </div>
+      <div class="entropy-bar-wrap"><div class="entropy-bar-label"><span>Entropy</span><span>72.3 · RADIOACTIVE</span></div><div class="entropy-bar-bg"><div class="entropy-bar-fill" style="width:72.3%;background:var(--yellow)"></div></div></div>
+      <div class="dossier-insight">Radioactive entropy but only one adversarial phrase — dual-threshold not breached. System chose DEFER not KILL. Not a green light, not a full stop. $500M stays on ice. This is the third state that binary engines can't produce.</div>
+      <div class="dossier-audit">[2026-04-26T08:14:12Z] Monte Carlo: 5000 iterations · volatility_tax: 0.28 · nuance preserved</div>
+    </div>
+
+    <div class="dossier escalate">
+      <div class="dossier-header">
+        <div><div class="dossier-name">08 — The Unicorn</div><div class="dossier-company">Pinnacle Global Sovereign Ventures · SIG-19DC8DBEC6A</div></div>
+        <div class="dossier-badges"><span class="badge badge-deal">$2B</span><span class="badge badge-escalate">ESCALATE</span></div>
+      </div>
+      <div class="dossier-metrics">
+        <div class="metric"><div class="metric-val">$384,800</div><div class="metric-label">Expected revenue</div></div>
+        <div class="metric"><div class="metric-val">$90,390</div><div class="metric-label">Capital allocated</div></div>
+        <div class="metric"><div class="metric-val" style="color:var(--green)">24.49</div><div class="metric-label">Kill score · lowest of 10</div></div>
+        <div class="metric"><div class="metric-val">75.5%</div><div class="metric-label">Win probability</div></div>
+      </div>
+      <div class="entropy-bar-wrap"><div class="entropy-bar-label"><span>Entropy</span><span>4.9 · STABLE · floor</span></div><div class="entropy-bar-bg"><div class="entropy-bar-fill" style="width:4.9%;background:var(--green)"></div></div></div>
+      <div class="dossier-insight">$2B deal, 20 markets, four authority confirmations, zero noise. Kill risk 24.49 — lowest across all 10 dossiers. The mathematical definition of a perfect deal. System deployed capital immediately with maximum confidence.</div>
+      <div class="dossier-audit">[2026-04-26T08:15:49Z] Monte Carlo: 5000 iterations · volatility_tax: 0.95 · perfect signal</div>
+    </div>
+
+    <div class="dossier defer">
+      <div class="dossier-header">
+        <div><div class="dossier-name">09 — The Senator</div><div class="dossier-company">Vantage Strategic Partners · SIG-19DC8DC56D7</div></div>
+        <div class="dossier-badges"><span class="badge badge-deal">$300M</span><span class="badge badge-defer">DEFER</span></div>
+      </div>
+      <div class="dossier-metrics">
+        <div class="metric"><div class="metric-val">$306,247</div><div class="metric-label">Expected revenue</div></div>
+        <div class="metric"><div class="metric-val">30.2</div><div class="metric-label">Entropy · regulatory</div></div>
+        <div class="metric"><div class="metric-val">37.46</div><div class="metric-label">Kill score / 100</div></div>
+        <div class="metric"><div class="metric-val">4.4%</div><div class="metric-label">Kelly · compliance taxed</div></div>
+      </div>
+      <div class="entropy-bar-wrap"><div class="entropy-bar-label"><span>Entropy</span><span>30.2 · regulatory friction</span></div><div class="entropy-bar-bg"><div class="entropy-bar-fill" style="width:30.2%;background:var(--yellow)"></div></div></div>
+      <div class="dossier-insight">$300M with Secretary of State backing — legitimately good deal. But compliance, jurisdiction, transparency, open architecture review generated cumulative entropy at 30.2. Good deal, wrong timing. DEFER until regulatory fog clears.</div>
+      <div class="dossier-audit">[2026-04-26T08:16:16Z] Monte Carlo: 5000 iterations · volatility_tax: 0.70 · regulatory friction</div>
+    </div>
+
+    <div class="dossier kill">
+      <div class="dossier-header">
+        <div><div class="dossier-name">10 — The Phantom Billion</div><div class="dossier-company">Nexus Unlimited Global Corp · SIG-19DC8DCAF45</div></div>
+        <div class="dossier-badges"><span class="badge badge-deal">"Billions" · $0 real</span><span class="badge badge-kill">KILL</span></div>
+      </div>
+      <div class="dossier-metrics">
+        <div class="metric"><div class="metric-val" style="color:var(--red)">75.0</div><div class="metric-label">Kill score · hard floor</div></div>
+        <div class="metric"><div class="metric-val">$283,921</div><div class="metric-label">Waste avoided</div></div>
+        <div class="metric"><div class="metric-val">3.6%</div><div class="metric-label">NLP density · void</div></div>
+        <div class="metric"><div class="metric-val" style="color:var(--red)">NO</div><div class="metric-label">Authority · fired</div></div>
+      </div>
+      <div class="entropy-bar-wrap"><div class="entropy-bar-label"><span>Entropy</span><span>33.8 · noise-heavy</span></div><div class="entropy-bar-bg"><div class="entropy-bar-fill" style="width:33.8%;background:var(--yellow)"></div></div></div>
+      <div class="dossier-insight">The word "billions" appeared 3 times. The system didn't care. No authority, no confirmed budget, pure noise. Kill score hard-clamped to 75 floor. OMNI_KERNEL cannot be impressed by large numbers alone. Signal quality is the only currency that matters.</div>
+      <div class="dossier-audit">[2026-04-26T08:16:39Z] Monte Carlo: 5000 iterations · authority_override: TRUE · phantom rejected</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="summary-section">
+  <section>
+    <span class="section-tag">System Intelligence // Key Findings</span>
+    <h2>Findings.</h2>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="summary-num" style="color:var(--red)">$1.2B</div>
+        <div class="summary-desc">Largest hostile deal caught and killed. Five phrase-level extraction vectors detonated entropy to 100.0. Volatility tax zeroed. Capital preserved.</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-num" style="color:var(--green)">24.49</div>
+        <div class="summary-desc">Lowest kill score across all 10 dossiers. The $2B Unicorn — zero noise, four authority confirmations, entropy at floor. Mathematical perfection.</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-num">3</div>
+        <div class="summary-desc">Decision states. KILL, DEFER, ESCALATE. Binary systems can't produce DEFER. This third state is where nuance lives — and where $500M stays safe.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-left">
+    OMNI_KERNEL v7.1<br>
+    © 2026 OmniAgent Architecture<br>
+    All Rights Reserved
+  </div>
+  <div class="footer-right">
+    Classification: Level 4 Proprietary<br>
+    Status: Patent Pending<br>
+    Valuation Target: $300M+
+  </div>
+</footer>
+
+</body>
+</html>
