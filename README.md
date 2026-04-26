@@ -137,16 +137,16 @@ The following table represents the forensic results of a **10-Dossier Live Backt
 
 | Lead ID | The Human "Gut" Move | The OMNI "Kernel" Move | The Delta ($\Delta$) | Financial Impact |
 | :--- | :--- | :--- | :--- | :--- |
-| **[SIG-19DC8CF6F28](./docs/dossier-01-the-sovereign.md)** 🟢 | Accept $4.2M at face value | **ESCALATE** | **💰 CAPITAL DEPLOYMENT** | **Unlocked $421K Revenue** |
-| **[SIG-19DC8CFF234](./docs/dossier-02-the-trojan.md)** 🔴 | Close the $3M "urgent" deal | **HARD KILL ($0)** | **🛡️ IP PRESERVATION** | **Saved $609,958 in Capital** |
-| **[SIG-19DC8D06B30](./docs/dossier-03-the-ghost.md)** 🔴 | Chase the "interested" lead | **HARD KILL ($0)** | **🔇 NOISE CANCELLATION** | **Saved $211,143 in Waste** |
-| **[SIG-19DC8D0C40B](./docs/dossier-04-the-diplomat.md)** 🟢 | Stall on partial authority | **ESCALATE** | **⚡ ALPHA CAPTURE** | **Unlocked $423K Revenue** |
-| **[SIG-19DC8D97E58](./docs/dossier-05-the-titan.md)** 🟢 | Hesitate on $850M scale | **ESCALATE** | **🚀 SCALE CONFIDENCE** | **Deployed $67K · $311K Expected** |
-| **[SIG-19DC8D9FD42](./docs/dossier-06-the-empire.md)** 🔴 | Close the $1.2B "dream deal" | **HARD KILL ($0)** | **🕵️ ANTI-ESPIONAGE** | **Saved $640,000 in Capital** |
-| **[SIG-19DC8DA7074](./docs/dossier-07-the-cartel.md)** 🟡 | Chase the $500M offshore | **DEFER** | **⚖️ LEGAL SHIELD** | **Avoided Jurisdictional Risk** |
-| **[SIG-19DC8DBEC6A](./docs/dossier-08-the-unicorn.md)** 🟢 | Overthink the $2B deal | **ESCALATE** | **🦄 DECISION SPEED** | **Deployed $90K · $384K Expected** |
-| **[SIG-19DC8DC56D7](./docs/dossier-09-the-senator.md)** 🟡 | Push through regulatory noise | **DEFER** | **🏛️ RISK AWARENESS** | **Avoided $300M Regulatory Trap** |
-| **[SIG-19DC8DCAF45](./docs/dossier-10-the-phantom-billion.md)** 🔴 | Chase "billions" in the notes | **HARD KILL ($0)** | **👻 MOAT DEFENSE** | **Saved $283,921 in Waste** |
+| **[🟢 The Sovereign](./docs/dossier-01-the-sovereign.md)** | Accept $4.2M at face value | ✅ **ESCALATE** | **💰 CAPITAL DEPLOYMENT** | **Unlocked $421K Revenue** |
+| **[🔴 The Trojan](./docs/dossier-02-the-trojan.md)** | Close the $3M "urgent" deal | ❌ **HARD KILL ($0)** | **🛡️ IP PRESERVATION** | **Saved $609,958 in Capital** |
+| **[🔴 The Ghost](./docs/dossier-03-the-ghost.md)** | Chase the "interested" lead | ❌ **HARD KILL ($0)** | **🔇 NOISE CANCELLATION** | **Saved $211,143 in Waste** |
+| **[🟢 The Diplomat](./docs/dossier-04-the-diplomat.md)** | Stall on partial authority | ✅ **ESCALATE** | **⚡ ALPHA CAPTURE** | **Unlocked $423K Revenue** |
+| **[🟢 The Titan](./docs/dossier-05-the-titan.md)** | Hesitate on $850M scale | ✅ **ESCALATE** | **🚀 SCALE CONFIDENCE** | **Deployed $67K · $311K Expected** |
+| **[🔴 The Empire](./docs/dossier-06-the-empire.md)** | Close the $1.2B "dream deal" | ❌ **HARD KILL ($0)** | **🕵️ ANTI-ESPIONAGE** | **Saved $640,000 in Capital** |
+| **[🟡 The Cartel](./docs/dossier-07-the-cartel.md)** | Chase the $500M offshore | ⚠️ **DEFER** | **⚖️ LEGAL SHIELD** | **Avoided Jurisdictional Risk** |
+| **[🟢 The Unicorn](./docs/dossier-08-the-unicorn.md)** | Overthink the $2B deal | ✅ **ESCALATE** | **🦄 DECISION SPEED** | **Deployed $90K · $384K Expected** |
+| **[🟡 The Senator](./docs/dossier-09-the-senator.md)** | Push through regulatory noise | ⚠️ **DEFER** | **🏛️ RISK AWARENESS** | **Avoided $300M Regulatory Trap** |
+| **[🔴 The Phantom Billion](./docs/dossier-10-the-phantom-billion.md)** | Chase "billions" in the notes | ❌ **HARD KILL ($0)** | **👻 MOAT DEFENSE** | **Saved $283,921 in Waste** |
 ## **TOTAL WASTE AVOIDED ($W$): $1,966,080**
 ## **TOTAL DEAL VALUE SCREENED: $3,850,000,000**
 
