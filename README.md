@@ -15,8 +15,7 @@
 ## 📺 SYSTEM DEMONSTRATION
 > **KERNEL v7.1 LIVE EXECUTION // ARCHITECTURAL WALKTHROUGH**
 
-[![Omni-Kernel v7.0 Demo]]<img width="1874" height="884" alt="image" src="https://github.com/user-attachments/assets/d607a30e-e0b8-45b1-bfdb-5d5a984da0c0" />
-(https://youtu.be/SiIsjAnr5Yk)
+[![Omni-Kernel v7.0 Demo](https://github.com/user-attachments/assets/7b7e28a9-71ed-4047-860a-1133fbe0a23f)](https://youtu.be/SiIsjAnr5Yk)
 
 *Note: This is a secure high-fidelity demonstration of the Kill Score logic and the Efficient Frontier plotting.*
 
